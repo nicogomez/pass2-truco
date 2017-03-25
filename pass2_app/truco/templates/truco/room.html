@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+{% if messages %}
+<ul class="messages">
+	{% for message in messages %}
+		<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+<!-- === Body Game === -->
+<div class="container">
+	<div class="row" id="reload">
+		<div class="col-xs-8 col-md-8">
+			<h1>{{ game.name }} <small> -> {{ my_player.user.username }} </small> </h1>
+		</div>
+		<div class="col-xs-4 col-md-4">
+			{% if my_player.owner and not game.game_started %}
+				<a class="btn btn-success" href="{% url 'truco:start-game' game.id %}">Iniciar Partida</a>
+			{% endif %}
+			<a class="btn btn-danger pull-right" href="{% url 'truco:giveup-game' game.id %}">Abandonar Partida</a>
+		</div>
+
+		{% if game.number_of_players == 4 %}
+			{% include 'include/table_4players.html' %}
+		{% elif  game.number_of_players == 6 %}
+			{% include 'include/table_6players.html' %}
+		{% else %}
+			{% include 'include/table_2players.html' %}
+		{% endif %}
+
+		{% include 'include/info_partida.html' %}
+		
+		{% if not game.is_finished and game.round.is_finished %}
+			{% include 'include/info_round.html' %}
+		{% endif %}
+
+		{% if game.is_finished or game.player_set.all|length < game.number_of_players and game.game_started %}
+			{% if game.player_set.all|length  < game.number_of_players %}
+				<div class="panel panel-primary finishGame">
+					<div class="panel-heading">
+						<h3 class="panel-title">Un jugador abandono la partida</h3>
+					</div>
+			{% elif my_player.get_my_team_score > my_player.get_opponent_team_score %}
+				<div class="panel panel-success finishGame">
+						<div class="panel-heading">
+							<h3 class="panel-title">Ganaste</h3>
+						</div>
+			{% else %}
+				<div class="panel panel-warning finishGame">
+					<div class="panel-heading">
+							<h3 class="panel-title">Perdiste</h3>
+					</div>
+			{% endif %}
+				<div class="panel-body" style="background-color:#EEEEEE">
+					<h5><b>Nosotros:</b> {{ my_player.get_my_team_score }}<br>
+					<h5><b>Ellos:</b>{{ my_player.get_opponent_team_score }}</h5>
+					<span>El juego ha finalizado. Presione continuar para volver al menu principal</span><br><br>
+					<div class="text-center">
+						<a class="btn btn-success" href="{% url 'truco:finish-game' game.id %}">Continuar</a>
+					</div>
+				</div>
+		{% endif %}
+	</div>
+</div>
+<!-- === End Body Game === -->
+{%endblock%}

@@ -1,0 +1,147 @@
+{% load staticfiles %}
+
+{% block content %}
+<div class="col-xs-12 col-md-8 trucoTable">
+	<!-- Columna 1 arriba compañero - abajo contrincante -->
+	<div class="col-md-4 height_col_izq">
+		<div class="row" id="fila1_6p_izq">
+			<h4 class="text-center">{{ other_players.3.user.username | title }}</h4>
+			<!-- Cartas del contricante de arriba -->	
+			{% for card in other_players.3.get_current_cards %}
+				{% if card.en_mano  %}
+					<img class="Cards_6p" src="{% static 'cartas/reverso.jpg' %}">
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="row" id="fila2_6p_izq">
+			<!-- Cartas jugadas por el contrincante de arriba -->
+			{% for card in other_players.3.get_current_cards %}
+				{% if not card.en_mano %}
+					<div class="oponentCard {{ card.get_css_class }}">
+						<img class="Cards_6p" src="/static/cartas/{{ card.to_string }}.jpg">
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="row" id="fila3_6p_izq">
+			<!-- Cartas Jugadas por Mi  -->
+			{% for card in other_players.4.get_current_cards %}
+				{% if not card.en_mano %}
+					<div class="oponentCard {{ card.get_css_class }}">
+						<img class="Cards_6p" src="/static/cartas/{{ card.to_string }}.jpg">
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="row" id="fila4_6p_izq">
+			{% for card in other_players.4.get_current_cards %}
+				{% if card.en_mano  %}
+					<img class="Cards_6p" src="{% static 'cartas/reverso.jpg' %}">
+				{% endif %}
+			{% endfor %}
+			<h4 class="text-center">{{ other_players.4.user.username | title }}</h4>
+		</div>
+	</div>
+	
+	<!-- Columna 2 arriba contrincante - abajo yo -->
+	<div class="col-md-4 height_col_ctr">
+		<div class="row" id="fila1_6p_ctr">
+			<h4 class="text-center">{{ other_players.2.user.username | title }}</h4>
+			<!-- Cartas del contricante de arriba -->	
+			{% for card in other_players.2.get_current_cards %}
+				{% if card.en_mano  %}
+					<img class="Cards_6p" src="{% static 'cartas/reverso.jpg' %}">
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="row" id="fila2_6p_ctr">
+			<!-- Cartas jugadas por el contrincante de arriba -->
+			{% for card in other_players.2.get_current_cards %}
+				{% if not card.en_mano %}
+					<div class="oponentCard {{ card.get_css_class }}">
+						<img class="Cards_6p" src="/static/cartas/{{ card.to_string }}.jpg">
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="row" id="fila3_6p_ctr">
+			<!-- Cartas Jugadas por Mi  -->
+			{% for card in my_player.get_current_cards %}
+				{% if not card.en_mano %}
+					<div class="myCard {{ card.get_css_class }}">
+						<img class="Cards_6p" src="/static/cartas/{{ card.to_string }}.jpg">
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="row" id="fila4_6p_ctr">
+			<!-- Mis Cartas al empezar la partida  -->
+			{% if game.game_started %}
+				{% for card in my_player.get_current_cards %}
+					{% if card.en_mano %}
+						{% if not my_player.gone_to_mazo %}
+							<div class="col-xs-3 col-md-3">
+								<form id="put_card_form" action="{% url 'truco:put-card' game.id %}" method="POST">
+									{% csrf_token %}
+									<input type="hidden" name="put_card" value="{{ card.anchor }}">
+									<input class="Cards_6p" type="image" src="/static/cartas/{{ card.to_string }}.jpg" {% if not my_player.is_my_turn %} disabled {% endif %}>
+								</form>
+							</div>
+						{% else %}
+							<img class="Cards" src="{% static 'cartas/reverso.jpg' %}">
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+			{% else %}
+				<div>
+					<!-- Mis Cartas antes de  empezar la partida  -->
+					<img class="Cards_6p" src="{% static 'cartas/reverso.jpg' %}">
+					<img class="Cards_6p" src="{% static 'cartas/reverso.jpg' %}">
+					<img class="Cards_6p" src="{% static 'cartas/reverso.jpg' %}">
+				</div>
+			{% endif %}
+		</div>
+	</div>
+
+	<!-- Columna 3 arriba compañero - abajo contrincanter -->
+	<div class="col-md-4 height_col_der">
+		<div class="row" id="fila1_6p_der">
+			<h4 class="text-center">{{ other_players.1.user.username | title }}</h4>
+			<!-- Cartas del contricante de arriba -->	
+			{% for card in other_players.1.get_current_cards %}
+				{% if card.en_mano  %}
+					<img class="Cards_6p" src="{% static 'cartas/reverso.jpg' %}">
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="row" id="fila2_6p_der">
+			<!-- Cartas jugadas por el contrincante de arriba -->
+			{% for card in other_players.1.get_current_cards %}
+				{% if not card.en_mano %}
+					<div class="oponentCard {{ card.get_css_class }}">
+						<img class="Cards_6p" src="/static/cartas/{{ card.to_string }}.jpg">
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="row" id="fila3_6p_der">
+			<!-- Cartas Jugadas por Mi  -->
+			{% for card in other_players.0.get_current_cards %}
+				{% if not card.en_mano %}
+					<div class="oponentCard {{ card.get_css_class }}">
+						<img class="Cards_6p" src="/static/cartas/{{ card.to_string }}.jpg">
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="row" id="fila4_6p_der">
+			{% for card in other_players.0.get_current_cards %}
+				{% if card.en_mano  %}
+					<img class="Cards_6p" src="{% static 'cartas/reverso.jpg' %}">
+				{% endif %}
+			{% endfor %}
+			<h4 class="text-center">{{ other_players.0.user.username | title }}</h4>
+		</div>
+	</div>
+</div>   <!-- ./col-xs-12 col-md-8 trucoTable -->
+{% endblock %}

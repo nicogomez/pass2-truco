@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="col-md-12">
+	<div class="col-md-8 page-header">
+	  <h1>Bienvenido <small>/ {{ user.username }}</small></h1>
+	</div>
+	{% if user.player %}
+	<div class="col-md-4">
+		<a class="btn btn-success pull-right" href="{% url 'truco:room' user.player.game_id %}">Ir a mi partida</a>
+	</div>
+	{% endif %}
+</div>
+<!-- ./col-md-12 -->
+
+<div class="col-md-12">
+	{% if messages %}
+	<ul class="messages">
+	    {% for message in messages %}
+	    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	    {% endfor %}
+	</ul>
+	{% endif %}
+</div>
+<!-- ./col-md-12 -->
+
+<div class="col-xs-12 col-md-4">
+	<h2 class="text-center">Crear nueva Mesa</h2>	
+
+	<form role="form" method= "POST">
+		{% csrf_token %}
+
+		<div class="form-group">
+	    	<input type="text" class="form-control" name="name" id="name" placeholder="Nombre de Mesa">
+		     {{ form.name.errors }}
+	  	</div>
+
+	  	<label>Cantidad de jugadores</label>
+		<div class="radio">
+		 	<label class="radio-inline">
+		    	<input type="radio" name="number_of_players" id="optionsRadios1" value="2" checked> 2
+		  	</label>
+		  	<label class="radio-inline">
+		    	<input type="radio" name="number_of_players" id="optionsRadios2" value="4"> 4
+		  	</label>
+		  	<label class="radio-inline">
+		    	<input type="radio" name="number_of_players" id="optionsRadios3" value="6"> 6
+		  	</label>
+	  	</div>
+
+		<label>Limite de puntos</label>
+		<div class="radio">
+		  	<label class="radio-inline">
+		    	<input type="radio" name="score_limit" id="optionsRadios1" value="15" checked> 15
+		  	</label>
+		  	<label class="radio-inline">
+		    	<input type="radio" name="score_limit" id="optionsRadios2" value="30"> 30
+		  	</label>
+		</div>
+
+		<button type="submit" class="btn btn-default">Crear Partida</button>
+	</form>
+</div>
+
+<div id="reload" class="col-xs-12 col-md-8">
+	<h2 class="text-center">Mesas de Juego</h2>
+	<table class="table table-hover">
+	    <thead>
+	      	<tr>
+		        <th>Id</th>
+		        <th class="text-center">Nro de Jugadores</th>
+		        <th class="text-center">Limite de Puntos</th>
+		        <th class="text-center">Nombre de partida</th>
+		        <th class="text-center">Estado</th>
+     	 	</tr>
+	    </thead>
+	    <tbody>
+		    {% for game in games %}
+		      	<tr id="{{ game.id }}">
+			        <td>{{ game.id }}</td>
+			        <td class="text-center">{{ game.number_of_players }}</td>
+			        <td class="text-center">{{ game.score_limit }}</td>
+			        <td class="text-center">
+			        	{% if not game.game_started %}
+			        		<a href="{% url 'truco:room' game.id %}">{{ game.name }}</a>
+			        	{% else %}
+			    			{{ game.name }}
+			    		{%endif%}
+		        	</td>
+			        <td class="text-center">
+				        {% if not game.game_started %}
+			    			<span class="badge">No en juego</span>
+			    		{% else %}
+			    			<span class="badge">En juego</span>
+			    		{%endif%}
+			        </td>
+		      	</tr>
+			{% endfor %}
+	    </tbody>
+  	</table>
+</div>
+<!-- ./col-lg-8 -->
+{% endblock %}

@@ -1,0 +1,25 @@
+{% load staticfiles %}
+
+{% block content %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Cante sus Puntos</h3>
+  </div>
+
+  <div class="panel-body">
+    <form id="send_points" action="{% url 'truco:send-envido-points' game.id %}" method="POST">
+      {% csrf_token %}
+      <div class="input-group">
+        <span class="input-group-addon">{{ my_player.get_envido_points }}</span>
+        <input type="text" name='points' class="form-control" placeholder="Ingrese sus puntos">
+        <button type="submit" class="btn btn-default">Cantar</button>
+      </div>
+    </form>
+    <form id="send_points" action="{% url 'truco:send-envido-points' game.id %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name='points' value="-1">
+      <button type="submit" class="btn btn-default">Son buenas</button>
+    </form>
+  </div>
+</div>  
+{% endblock %}

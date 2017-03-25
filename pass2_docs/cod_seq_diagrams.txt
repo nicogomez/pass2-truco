@@ -1,0 +1,71 @@
+title Login de Usuario
+
+Browser->Views: HttpRequest(POST /login/)
+Views->django.contrib.auth: LoginForm()
+django.contrib.auth-->Views: form
+Views->LoginForm: is_valid()
+LoginForm-->Views: True
+Views->Browser: HttpResponseRedirect(/truco/)
+
+
+title Registrar Usuario
+
+Browser->Views: HttpRequest(POST /sign-in/)
+Views->django.contrib.auth: UserCreationForm()
+django.contrib.auth-->Views: form
+Views->UserCreationForm: is_valid()
+UserCreationForm-->Views: True
+Views->django.contrib.auth: autheticate()
+django.contrib.auth-->Views: user
+Views->django.contrib.auth: Login()
+Views->Browser: HttpResponseRedirect(/truco/)
+
+
+title Crear Partida
+
+Browser->Views: HttpRequest(POST /index/)
+Views->truco.forms: GameForm()
+truco.forms-->Views: form
+Views->GameForm: is_valid()
+GameForm-->Views: True
+Views->Game: Game()
+Game-->Views: new_game
+Views->Player: player.create()
+Player-->Views: Player
+Views->Browser: HttpResponseRedirect(/room/<id>)
+
+
+title Unirse a Partida
+
+Browser->Views: HttpRequest(GET /room/)
+Views->Game: Game.objects.get()
+Game-->Views: game
+Views->Game: allow_new_player??
+Game-->Views: True
+Views->Player: player.create()
+Player-->Views: player
+Views->Browser: HttpResponseRedirect(/room/<id>)
+
+
+title Iniciar Partida
+
+Browser->Views: HttpRequest(GET /start-game/)
+Views->Game: Game.objects.get()
+Game-->Views: game
+Views->Game: is_ready()
+Game-->Views: True
+Views->Game: init_game()
+Game-->Views: game_started
+Views->Browser: HttpResponseRedirect(/room/<id>)
+
+
+title Tirar una Carta
+
+Browser->Views: HttpRequest(POST /put-card/<game_id>)
+Views->Game: Game.objects.get
+Game-->Views: game
+Views->Views: request.POST.get
+Views-->Views: card_selected
+Views->Player: put_card(<game>)
+Views->Round: next_turn(<game>)
+Views->Browser: HttpResponseRedirect(/room/<game_id>)

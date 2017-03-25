@@ -1,0 +1,125 @@
+.finishGame {
+	position: absolute;
+	top: 40%;
+	left: 30%;
+	z-index: 4;
+	box-shadow: 5px 5px 10px 2px #444444;
+}
+.scoreImg {
+	width: auto;
+	height: auto;
+	max-width: 250px;
+	max-height: 100px;
+}
+.Cards {
+	width: 70px;
+	height: 110px;
+}
+.height_col_izq h4,
+.height_col_der h4,
+.height_col_ctr h4 {
+	color: white;
+}
+
+/* ==== Css para cuando hay 2 jugadores ==== */
+.firstCard {
+	left: 260px;
+	z-index: 1;	
+}
+.secondCard {
+	left: 300px;
+	z-index: 2;
+}
+.thirdCard {
+	left: 340px;
+	z-index: 3;
+}
+#fila1 {
+	margin: 4% 26%;
+	min-height: 24%;
+}
+#fila2 {min-height: 20%;}
+#fila3 {min-height: 20%;}
+#fila4 {margin: -4% 40% 0% 24%;}
+#fila2 .oponentCard {
+	position: absolute;
+	top: 140px;
+}
+#fila3 .myCard {
+	position: absolute;
+	top: 215px;
+}
+/* ========================================= */
+
+/* ==== Css para cuando hay 4 jugadores ==== */
+.trucoTable {
+	background: url(/static/cartas/mesa03.jpg);
+	height: 594px;
+	width: 66%;
+	border-radius: 16px;
+	border-color: rgb(161, 137, 16);
+	border-style: inset;
+	border-width: 8px;
+}
+.height_col_izq {
+	height: 100%;
+	margin-left: 4%
+}
+.height_col_der {
+	height: 100%;
+	margin-right: -4%
+}
+#fila1_4p_izq {min-height: 20%;}
+#fila2_4p_izq {min-height: 20%; margin: 10% 0% 0% 25%;}
+#fila3_4p_izq {min-height: 20%; margin: 0% 0% 0% 25%;}
+#fila4_4p_izq {margin: 0% 30% 0% 0%; padding-top: 8%;}
+#fila1_4p_der {min-height: 20%;}
+#fila2_4p_der {min-height: 20%; margin-top: 10%}
+#fila3_4p_der {min-height: 20%;}
+#fila4_4p_der {margin: 0% 30% 0% 0%; padding-top: 8%;}
+#fila2_4p_der .oponentCard, 
+#fila3_4p_der .myCard,
+#fila2_4p_izq .oponentCard,
+#fila3_4p_izq .oponentCard {
+	float: left;
+	margin-right: -5%;
+}
+/* ========================================= */
+
+/* ==== Css para cuando hay 6 jugadores ==== */
+.Cards_6p {
+	width: 55px;
+	height: 90px;
+}
+.height_col_izq {
+	height: 100%;
+}
+.height_col_ctr {
+	height: 100%;
+}
+.height_col_der {
+	height: 100%;
+	margin-right: -4%;
+}
+#fila1_6p_izq {min-height: 20%;}
+#fila2_6p_izq {min-height: 20%; margin: 10% 0% 0% 0%;}
+#fila3_6p_izq {min-height: 20%;}
+#fila4_6p_izq {padding-top: 8%;}
+#fila1_6p_ctr {min-height: 20%;}
+#fila2_6p_ctr {min-height: 20%; margin-top: 10%;}
+#fila3_6p_ctr {min-height: 20%;}
+#fila4_6p_ctr {padding-top: 8%;}
+#fila1_6p_der {min-height: 20%;}
+#fila2_6p_der {min-height: 20%; margin-top: 10%;}
+#fila3_6p_der {min-height: 20%;}
+#fila4_6p_der {padding-top: 8%;}
+#fila2_6p_izq .oponentCard,
+#fila3_6p_izq .oponentCard,
+#fila2_6p_ctr .oponentCard, 
+#fila3_6p_ctr .myCard,
+#fila2_6p_der .oponentCard,
+#fila3_6p_der .oponentCard {
+	float: left;
+	margin-right: -5%;
+}
+/* ========================================= */

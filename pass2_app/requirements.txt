@@ -1,0 +1,5 @@
+Django==1.6.6
+argparse==1.2.1
+ipdb==0.8
+ipython==2.3.0
+wsgiref==0.1.2

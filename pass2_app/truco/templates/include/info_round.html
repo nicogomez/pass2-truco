@@ -1,0 +1,16 @@
+{% load staticfiles %}
+
+{% block content %}
+<div class="panel panel-primary finishGame">
+	<div class="panel-heading">
+		<h3 class="panel-title">Info de Ronda</h3>
+	</div>
+
+<div class="panel-body" style="background-color:#EEEEEE">
+	<h5><b>Nosotros:</b> {{my_player.get_my_team_round_score}}<br>
+	<h5><b>Ellos:</b>{{my_player.get_opponent_team_round_score}}</h5>
+	<span>Cargando nueva ronda...</span><br><br>
+	<a class="btn btn-success btn-xs"  href="{% url 'truco:show-cards' game.id %}">Mostrar cartas</a>
+	<a class="btn btn-success btn-xs"  href="{% url 'truco:finish-round' game.id %}">Terminar Ronda</a>
+</div>	
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form class="form-horizontal" action="" method="POST">
+  <div class="col-md-offset-3 col-md-6">
+    {% csrf_token %}
+    
+    {{ form.non_field_errors }}  
+    
+    <div class="col-md-12">
+      <input class="form-control" id="id_username" maxlength="254" name="username" type="text" placeholder="nombre de usuario" autofocus/>
+      {{ form.username.errors }}
+    </div>
+
+    <div class="col-md-12">
+      <input class="form-control" id="id_password" name="password" type="password" placeholder="contraseña"/><br/>
+      {{ form.password.errors }}
+    </div>
+    
+    <div class="col-md-offset-4 col-md-12">
+      <button type="submit" class="btn btn-success">iniciar sesión</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="" method="POST">
+  <div class="col-md-offset-3 col-md-6">
+    {% csrf_token %}
+    
+    {{ form.non_field_errors }}
+
+    <div class="col-md-12">
+      <input class="form-control" id="id_username" maxlength="30" name="username" type="text" placeholder="nombre de usuario" title="Requerido. 30 caracteres o menos. Letras, dígitos y @/./+/-/_ solamente." autofocus/>
+      {{ form.username.errors }}
+    </div>
+
+    <div class="col-md-12">
+      <input class="form-control" id="id_password1" name="password1" type="password" placeholder="contraseña"/>
+      {{ form.password1.errors }}
+    </div>
+    
+    <div class="col-md-12">
+      <input class="form-control" id="id_password2" name="password2" type="password" placeholder="confirmación de contraseña" title="Ingrese la misma contraseña que arriba, para verificación."/><br/>
+      {{ form.password2.errors }}
+    </div>
+
+    <div class="col-md-offset-4 col-md-12">
+      <button type="submit" class="btn btn-success">registrarse</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

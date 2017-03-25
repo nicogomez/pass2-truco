@@ -1,0 +1,64 @@
+{% load staticfiles %}
+
+{% block content %}
+<div class="col-xs-12 col-md-8 trucoTable">
+	<div class="row" id="fila1">
+		<!-- Cartas del oponente -->
+		{% for player in other_players %}
+			{% for card in player.get_current_cards %}
+				{% if card.en_mano  %}
+					<img class="Cards" src="{% static 'cartas/reverso.jpg' %}">
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</div>
+
+	<div class="row" id="fila2">
+		<!-- Cartas jugadas por el oponentes -->
+		{% for player in other_players %}
+			{% for card in player.get_current_cards %}
+				{% if not card.en_mano %}
+					<div class="oponentCard {{ card.get_css_class }}">
+						<img class="Cards" src="/static/cartas/{{ card.to_string }}.jpg">
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</div>
+
+	<div class="row" id="fila3">
+		<!-- Cartas Jugadas por Mi  -->
+		{% for card in my_player.get_current_cards %}
+			{% if not card.en_mano %}
+				<div class="myCard {{ card.get_css_class }}">
+					<img class="Cards" src="/static/cartas/{{ card.to_string }}.jpg">
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+
+	<div class="row" id="fila4">
+		<!-- Mis Cartas al empezar la partida  -->
+		{% if game.game_started %}
+			{% for card in my_player.get_current_cards %}
+				{% if card.en_mano %}
+					<div class="col-xs-3 col-md-3">
+						<form id="put_card_form" action="{% url 'truco:put-card' game.id %}" method="POST">
+							{% csrf_token %}
+							<input type="hidden" name="put_card" value="{{ card.anchor }}">
+							<input class="Cards" type="image" src="/static/cartas/{{ card.to_string }}.jpg" {% if not my_player.is_my_turn %} disabled {% endif %}>
+						</form>
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			<div class="text-center">
+				<!-- Mis Cartas antes de  empezar la partida  -->
+				<img class="Cards" src="{% static 'cartas/reverso.jpg' %}">
+				<img class="Cards" src="{% static 'cartas/reverso.jpg' %}">
+				<img class="Cards" src="{% static 'cartas/reverso.jpg' %}">
+			</div>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
